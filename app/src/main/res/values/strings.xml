@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">tento</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">tento-login</string>
     <string name="action_settings">Settings</string>
+    <string name="Join">Join</string>
+    <string name="SignIn">Sign In</string>
+    <string name="loginInformation">Please enter email/password</string>
+    <string name="email">E-mail :  </string>
+    <string name="password">Password : </string>
+    <string name="JoinEmail">Email : </string>
+    <string name="JoinPassword">Password : </string>
+    <string name="ConfirmPassword">Confirm Password : </string>
+    <string name="JoinbtnOkay">Okay</string>
+    <string name="JoinbtnCancle">Cancle</string>
+    <string name="JoinInformation">Join Tento</string>>
 
 </resources>
