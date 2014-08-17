@@ -1,4 +1,4 @@
-package tento.kr.tento.Activity;
+package tento.kr.tento.activity;
 
 import android.app.Activity;
 import android.content.Intent;
