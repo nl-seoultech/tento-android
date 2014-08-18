@@ -1,8 +1,8 @@
-package tento.kr.tento.api;
+package kr.tento.api;
 
 import java.util.HashMap;
 
-import tento.kr.tento.model.User;
+import kr.tento.model.User;
 
 public class UserAPI extends TentoAPI<User> {
 

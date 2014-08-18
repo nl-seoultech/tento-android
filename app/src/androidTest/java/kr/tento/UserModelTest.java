@@ -1,14 +1,10 @@
-package tento.kr.tento;
+package kr.tento;
 
 import org.junit.Test;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.concurrent.TimeUnit;
-
-import tento.kr.tento.api.TentoResponse;
-import tento.kr.tento.api.UserAPI;
-import tento.kr.tento.model.User;
+import kr.tento.api.TentoResponse;
+import kr.tento.api.UserAPI;
+import kr.tento.model.User;
 
 
 

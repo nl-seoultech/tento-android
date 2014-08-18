@@ -1,4 +1,4 @@
-package tento.kr.tento.activity;
+package kr.tento.activity;
 
 
 import android.app.Activity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import tento.kr.tento.R;
+import kr.tento.R;
 
 public class JoinActivity extends Activity implements View.OnClickListener {
 

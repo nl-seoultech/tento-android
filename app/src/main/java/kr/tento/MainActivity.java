@@ -1,9 +1,11 @@
-package tento.kr.tento;
+package kr.tento;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import kr.tento.R;
 
 
 public class MainActivity extends Activity {

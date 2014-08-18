@@ -1,4 +1,4 @@
-package tento.kr.tento;
+package kr.tento;
 
 import android.test.InstrumentationTestCase;
 

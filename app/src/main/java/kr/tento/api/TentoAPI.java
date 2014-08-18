@@ -1,4 +1,4 @@
-package tento.kr.tento.api;
+package kr.tento.api;
 
 import android.os.AsyncTask;
 
@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import tento.kr.tento.model.User;
+import kr.tento.model.User;
 
 public class TentoAPI<T> {
 

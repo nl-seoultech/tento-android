@@ -1,4 +1,4 @@
-package tento.kr.tento.api;
+package kr.tento.api;
 
 import java.util.List;
 
