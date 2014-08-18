@@ -1,24 +1,18 @@
 package tento.kr.tento;
 
-import android.test.ActivityUnitTestCase;
-
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
-import java.util.concurrent.CountDownLatch;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
+import tento.kr.tento.api.TentoResponse;
+import tento.kr.tento.api.UserAPI;
 import tento.kr.tento.model.User;
 
 
 
-public class UserModelTest extends ActivityUnitTestCase {
-
-    final CountDownLatch signal = new CountDownLatch(1);
-
-    public UserModelTest(Class activityClass) {
-        super(activityClass);
-    }
+public class UserModelTest extends ModelTestCase {
 
     @Test
     public void testInitializeUserModel() {
@@ -34,32 +28,34 @@ public class UserModelTest extends ActivityUnitTestCase {
     }
 
     @Test
-    public void testCreateUser() {
-        /*
-        runTestOnUiThread(new Runnable() {
+    public void testWebCreateUser() throws Throwable {
+        final int id = 1;
+        final String email = "mytest@test.com";
+        final String name = "mytest";
+        final User u = new User(id, email, name);
+        u.setPassword("testpassword");
 
+        Runnable r = new Runnable() {
             @Override
             public void run() {
-            }
-        });
-        */
+                UserAPI userApi = new UserAPI();
+                userApi.create(u, new TentoResponse.single<User>() {
+                    @Override
+                    public void ok(User o) {
+                        assertEquals(email, u.getEmail());
+                        assertEquals(u.getId(), id);
+                        assertEquals(name, u.getName());
+                        testAsyncDone();
+                    }
 
-        int id = 1;
-        String email = "admire9@gmail.com";
-        String name = "admire9";
-        String password = "helloworld";
-
-        User u = new User(id, email, name);
-        u.create(password, new User.TentoCallback() {
-            @Override
-            public void success(String result) {
-                org.junit.Assert.assertEquals("!", result);
+                    @Override
+                    public void fail(String f) {
+                        throw new AssertionError(f);
+                    }
+                });
             }
+        };
 
-            @Override
-            public void error() {
-                org.junit.Assert.assertEquals("!", "@");
-            }
-        });
+        testAsync(r);
     }
 }
