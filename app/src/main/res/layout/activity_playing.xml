@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="9">
+
+        <ImageView
+            android:id="@+id/imgAlbumArt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/imgAlbumArt"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="8"
+                android:textSize="15dp" />
+
+            <CheckBox
+                android:id="@+id/checkboxRepeat"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/repeat_once"
+                android:layout_weight="8"
+                android:textSize="15dp" />
+
+            <CheckBox
+                android:id="@+id/checkboxRandom"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/random_play"
+                android:layout_weight="8"
+                android:textSize="15dp" />
+
+            <CheckBox
+                android:id="@+id/checkboxRepeatAll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/repeat_all"
+                android:checked="true"
+                android:layout_weight="8"
+                android:textSize="15dp" />
+
+            <SeekBar
+                android:id="@+id/seekbarSong"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="6"
+            android:layout_marginBottom="5dp">
+
+            <Button
+                android:id="@+id/btnPrev"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Prev" />
+
+            <Button
+                android:id="@+id/btnPlayPause"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Play" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Next"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -13,6 +13,13 @@
     <string name="ConfirmPassword">Confirm Password : </string>
     <string name="JoinbtnOkay">Okay</string>
     <string name="JoinbtnCancle">Cancle</string>
-    <string name="JoinInformation">Join Tento</string>>
+    <string name="JoinInformation">Join Tento</string>
+    <string name="title_activity_playing">PlayingActivity</string>
+    <string name="button_pause">Pause</string>
+    <string name="repeat_once">한곡 반복</string>
+    <string name="random_play">무작위 재생</string>
+    <string name="repeat_all">전곡 반복</string>
+    <string name="title_activity_tento_fragement">TentoFragementActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

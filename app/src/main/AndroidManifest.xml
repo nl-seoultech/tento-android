@@ -8,15 +8,33 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="kr.tento.activity.LoginActivity"
-            android:label="@string/app_name">
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name=".activity.JoinActivity" >
+        </activity>
+        <activity
+            android:name=".activity.PlayingActivity"
+            android:label="@string/title_activity_playing" >
+         </activity>
+
+        <service android:name=".PlayService" >
+            <intent-filter>
+                <action android:name="tento.PlaySongService" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".activity.TentoFragementActivity"
+            android:label="@string/title_activity_tento_fragement" >
+        </activity>
+
+        <activity android:name=".activity.PlaylistFragementActivity"
+            android:label="PlaylistFragementActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name="kr.tento.activity.JoinActivity">
         </activity>
     </application>
 
