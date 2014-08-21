@@ -5,11 +5,16 @@ import com.squareup.okhttp.MediaType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.tento.api.TentoResponse;
+import kr.tento.api.UserAPI;
+
 public class User {
     private int id;
     private String email;
     private String name;
     private String password;
+    private Token token;
+    private UserAPI userApi = new UserAPI();
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -23,6 +28,10 @@ public class User {
         id = o.getInt("id");
         name = o.getString("name");
         email = o.getString("email");
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -45,8 +54,38 @@ public class User {
         return password;
     }
 
-    public interface TentoCallback {
-        public void success(String result);
-        public void error();
+    public void create() {
+        userApi.create(this, new TentoResponse.single<User>() {
+            @Override
+            public void ok(User o) {
+            }
+
+            @Override
+            public void fail(String f) {
+            }
+        });
+    }
+
+    public void login() {
+
+        userApi.login(this, new TentoResponse.single<User>() {
+            @Override
+            public void ok(User o) {
+                setId(o.getId());
+                setToken(o.getToken());
+            }
+
+            @Override
+            public void fail(String f) {
+            }
+        });
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 }

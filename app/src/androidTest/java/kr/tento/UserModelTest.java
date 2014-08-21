@@ -39,9 +39,59 @@ public class UserModelTest extends ModelTestCase {
                     @Override
                     public void ok(User o) {
                         assertEquals(email, u.getEmail());
-                        assertEquals(u.getId(), id);
+                        assertEquals(id, u.getId());
                         assertEquals(name, u.getName());
+
+
                         testAsyncDone();
+                    }
+
+                    @Override
+                    public void fail(String f) {
+                        throw new AssertionError(f);
+                    }
+                });
+            }
+        };
+
+        testAsync(r);
+    }
+
+
+    @Test
+    public void testWebLoginUser() throws Throwable {
+        final int id = 1;
+        final String email = "mytest@test.com";
+        final String name = "mytest";
+        final User u = new User(id, email, name);
+        u.setPassword("testpassword");
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                final UserAPI userApi = new UserAPI();
+                userApi.create(u, new TentoResponse.single<User>() {
+                    @Override
+                    public void ok(User o) {
+                        assertEquals(email, u.getEmail());
+                        assertEquals(id, u.getId());
+                        assertEquals(name, u.getName());
+                        userApi.login(u, new TentoResponse.single<User>() {
+
+                            @Override
+                            public void ok(User o) {
+                                assertEquals(email, u.getEmail());
+                                assertEquals(id, u.getId());
+                                assertEquals(name, u.getName());
+                                assertTrue(o.getToken() != null);
+                                testAsyncDone();
+                            }
+
+                            @Override
+                            public void fail(String f) {
+                                throw new AssertionError();
+                            }
+                        });
                     }
 
                     @Override

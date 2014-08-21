@@ -1,6 +1,7 @@
 package kr.tento.api;
 
 import android.os.AsyncTask;
+import android.util.Pair;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -21,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import kr.tento.model.Token;
 import kr.tento.model.User;
 
 public class TentoAPI<T> {
@@ -33,11 +35,24 @@ public class TentoAPI<T> {
         try {
             if(c.equals(User.class)) {
                 r = (T) new User(o);
+            } else if(c.equals(Token.class)) {
+                r = (T) new Token(o);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return r;
+    }
+
+    protected T parseSingle(Class<T> c, String s) {
+        T result = null;
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            result = parseSingle(c, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     protected T parseOne(Class<T> c, String jsonable) {
@@ -111,27 +126,30 @@ public class TentoAPI<T> {
                 .post(body)
                 .build();
         final OkHttpClient client = new OkHttpClient();
-        new AsyncTask<Request, Void, String>() {
+        new AsyncTask<Request, Void, Pair<Boolean, String>>() {
             @Override
-            protected String doInBackground(Request... requests) {
+            protected Pair<Boolean, String> doInBackground(Request... requests) {
                 String result = null;
+                boolean success = false;
                 Request request = requests[0];
                 try {
                     Response response = client.newCall(request).execute();
+                    success = response.isSuccessful();
                     result = response.body().string();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    result = e.getMessage();
                 }
 
-                return result;
+                Pair<Boolean, String> r = new Pair<Boolean, String>(success, result);
+                return r;
             }
 
             @Override
-            protected void onPostExecute(String result) {
-                if(result == null) {
-                    callback.fail(result);
+            protected void onPostExecute(Pair<Boolean, String> result) {
+                if(!result.first) {
+                    callback.fail(result.second);
                 } else {
-                    callback.ok(result);
+                    callback.ok(result.second);
                 }
             }
         }.execute(request);
