@@ -114,12 +114,12 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         switch (view.getId()) {
             case R.id.btnPlayPause:
                 if(!PlayService.Title.isEmpty()){
-                    intent.putExtra("func", 1);
+                    intent.putExtra("func", PlayService.PLAYPAUSE);
                     startService(intent);
                 }
                 break;
             case R.id.checkboxRepeat:
-                intent.putExtra("func", 2);
+                intent.putExtra("func", PlayService.LOOPCONTROL);
                 intent.putExtra("state", checkboxRepeat.isChecked());
                 startService(intent);
                 break;
@@ -144,7 +144,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                     SongStore.Song song = songStore.findPrevSongById(PlayService.SongId);
                     intent.putExtra("id", song.getId());
                     intent.putExtra("path", song.getPath());
-                    intent.putExtra("func", 4);
+                    intent.putExtra("func", PlayService.CHANGE);
                     startService(intent);
                 }
             }
@@ -197,7 +197,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         if (!songStore.isLastSongById(PlayService.SongId) || checkboxRepeatAll.isChecked()) {
             intent.putExtra("id", song.getId());
             intent.putExtra("path", song.getPath());
-            intent.putExtra("func", 4);
+            intent.putExtra("func", PlayService.CHANGE);
             startService(intent);
         }
     }
@@ -254,7 +254,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         stopProgressBar();
         long totalDuration = PlayService.mp.getDuration();
         int pos = (int) (totalDuration * (seekBar.getProgress() / 100.0));
-        intent.putExtra("func", 3);
+        intent.putExtra("func", PlayService.SEEKTO);
         intent.putExtra("seekTo", pos);
         startService(intent);
         updateProgressBar();

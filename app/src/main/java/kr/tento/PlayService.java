@@ -18,6 +18,11 @@ public class PlayService extends Service{
     private StatusChanged sc;
     private ServiceTimeTask stimetask;
     private Timer timer;
+    final static public int START = 0;
+    final static public int PLAYPAUSE = 1;
+    final static public int LOOPCONTROL = 2;
+    final static public int SEEKTO = 3;
+    final static public int CHANGE = 4;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,19 +44,19 @@ public class PlayService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         switch (intent.getIntExtra("func", 0)){
-            case 0:
+            case START:
                 startSong(intent.getStringExtra("path"));
                 break;
-            case 1:
+            case PLAYPAUSE:
                 playpauseSong();
                 break;
-            case 2:
+            case LOOPCONTROL:
                 loopControl(intent.getBooleanExtra("state", false));
                 break;
-            case 3:
+            case SEEKTO:
                 seekTo(intent.getIntExtra("seekTo", 0));
                 break;
-            case 4:
+            case CHANGE:
                 changeSong(intent.getStringExtra("id"), intent.getStringExtra("path"));
                 break;
         }

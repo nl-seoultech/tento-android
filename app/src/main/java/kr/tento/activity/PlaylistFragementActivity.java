@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
+
+import kr.tento.PlayService;
 import kr.tento.R;
 import kr.tento.activity.fragement.AlbumFragement;
 import kr.tento.activity.fragement.AllSongFragement;
@@ -44,7 +46,7 @@ public class PlaylistFragementActivity extends TentoFragementActivity implements
     @Override
     public void startSong(String path) {
 
-        intent.putExtra("func", 0);
+        intent.putExtra("func", PlayService.START);
         intent.putExtra("path", path);
         startService(intent);
 
