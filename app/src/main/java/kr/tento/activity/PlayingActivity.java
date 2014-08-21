@@ -9,15 +9,20 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import kr.tento.PlayService;
 import kr.tento.R;
+import kr.tento.SwipeGestureListener;
 import kr.tento.model.SongStore;
 
 
@@ -39,6 +44,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         }
     }
 
+    private SlidingUpPanelLayout layoutSlide;
+
+    private LinearLayout layoutMain;
 
     private Button btnPause;
 
@@ -71,7 +79,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_playing);
         txtTitle =  (TextView) this.findViewById(R.id.txtTitle);
         btnPause = (Button) this.findViewById(R.id.btnPlayPause); //정지 버튼
@@ -92,6 +99,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         btnNextSong.setOnClickListener(this);
         btnPreviousSong.setOnClickListener(this);
 
+        layoutSlide = (SlidingUpPanelLayout)findViewById(R.id.layoutSlide);
+        btnPause.setOnTouchListener(gestureListener); //임의로 버튼에 걸어놨음.
         setSongInfo();
         if (PlayService.mp.isPlaying()) {
             connectService();
@@ -100,6 +109,26 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             btnPause.setText("Play");
         }
     }
+
+
+    View.OnTouchListener gestureListener = new SwipeGestureListener() {
+        public boolean onSwipeRight() {
+            return false;
+        }
+
+        public boolean onSwipeLeft() {
+            return false;
+        }
+
+        public boolean onSwipeTop() {
+            layoutSlide.expandPanel(); //열려라 참깨
+            return false;
+        }
+
+        public boolean onSwipeBottom() {
+            return false;
+        }
+    };
 
     /**
      *
