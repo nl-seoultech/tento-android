@@ -25,12 +25,12 @@
         </service>
 
         <activity
-            android:name=".activity.TentoFragementActivity"
-            android:label="@string/title_activity_tento_fragement" >
+            android:name=".activity.TentoFragmentActivity"
+            android:label="@string/title_activity_tento_fragment" >
         </activity>
 
-        <activity android:name=".activity.PlaylistFragementActivity"
-            android:label="PlaylistFragementActivity">
+        <activity android:name=".activity.PlaylistFragmentActivity"
+            android:label="PlaylistFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

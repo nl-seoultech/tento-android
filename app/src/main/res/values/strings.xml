@@ -19,7 +19,7 @@
     <string name="repeat_once">한곡 반복</string>
     <string name="random_play">무작위 재생</string>
     <string name="repeat_all">전곡 반복</string>
-    <string name="title_activity_tento_fragement">TentoFragementActivity</string>
+    <string name="title_activity_tento_fragment">TentoFragmentActivity</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

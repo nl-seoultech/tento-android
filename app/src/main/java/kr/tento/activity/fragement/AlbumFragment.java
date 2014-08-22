@@ -15,7 +15,7 @@ import kr.tento.PlayService;
 import kr.tento.R;
 import kr.tento.model.SongStore;
 
-public class MoodFragement extends Fragment{
+public class AlbumFragment extends Fragment {
     private PlaylistInterface pi;
 
     private MediaPlayer mp = new MediaPlayer();  //음악 플레이어
@@ -26,12 +26,12 @@ public class MoodFragement extends Fragment{
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragement_mood, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_album, container, false);
         Bundle args = getArguments();
         Activity activity = getActivity();
         ArrayAdapter<String> listadapter; //Listview인 list와 list배열을 연결할 어댑터
         songStore = new SongStore(activity);
-        ListView listview = (ListView)rootView.findViewById(R.id.listMood);
+        ListView listview = (ListView)rootView.findViewById(R.id.listAlbum);
         listadapter = new ArrayAdapter<String>(
                 activity,
                 android.R.layout.simple_list_item_1,
@@ -61,6 +61,6 @@ public class MoodFragement extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-    //    pi = (PlaylistInterface)activity; //MainFragmentActivity와 인터페이스 연결
+ //       pi = (PlaylistInterface)activity; //MainFragmentActivity와 인터페이스 연결
     }
 }

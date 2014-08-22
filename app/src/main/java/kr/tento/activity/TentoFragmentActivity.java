@@ -9,7 +9,7 @@ import android.view.Menu;
 
 import kr.tento.PlaylistActionBar;
 
-public class TentoFragementActivity  extends FragmentActivity {
+public class TentoFragmentActivity extends FragmentActivity {
 
     // ActionBar의 탭이 가리키고있는 인덱스
     protected int tabPosition = 0;

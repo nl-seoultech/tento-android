@@ -10,30 +10,30 @@ import java.util.ArrayList;
 
 import kr.tento.PlayService;
 import kr.tento.R;
-import kr.tento.activity.fragement.AlbumFragement;
-import kr.tento.activity.fragement.AllSongFragement;
-import kr.tento.activity.fragement.ArtistFragement;
-import kr.tento.activity.fragement.MoodFragement;
+import kr.tento.activity.fragement.AlbumFragment;
+import kr.tento.activity.fragement.AllSongFragment;
+import kr.tento.activity.fragement.ArtistFragment;
+import kr.tento.activity.fragement.MoodFragment;
 
-public class PlaylistFragementActivity extends TentoFragementActivity implements AllSongFragement.PlaylistInterface{
+public class PlaylistFragmentActivity extends TentoFragmentActivity implements AllSongFragment.PlaylistInterface{
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
-    AllSongFragement allsongf;
+    AllSongFragment allsongf;
 
     Intent intent = new Intent("tento.PlaySongService");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragementactivity_playlist);
+        setContentView(R.layout.fragmentactivity_playlist);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         actionBar.setViewPager(mViewPager);
-        allsongf = (AllSongFragement) mSectionsPagerAdapter.fragments.get(0);
+        allsongf = (AllSongFragment) mSectionsPagerAdapter.fragments.get(0);
 
 
     }
@@ -71,10 +71,10 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     private void initFragments() {
-        fragments.add(new AllSongFragement());
-        fragments.add(new ArtistFragement());
-        fragments.add(new AlbumFragement());
-        fragments.add(new MoodFragement());
+        fragments.add(new AllSongFragment());
+        fragments.add(new ArtistFragment());
+        fragments.add(new AlbumFragment());
+        fragments.add(new MoodFragment());
     }
 
     /**
