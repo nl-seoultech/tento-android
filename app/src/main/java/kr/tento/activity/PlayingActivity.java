@@ -13,17 +13,21 @@ import android.os.IBinder;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import kr.tento.MusicFinder;
 import kr.tento.PlayService;
 import kr.tento.R;
 import kr.tento.SwipeGestureListener;
-import kr.tento.model.SongStore;
+import kr.tento.model.Music;
 
 
 public class PlayingActivity extends Activity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener  {
@@ -66,10 +70,12 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private Button btnPreviousSong;
 
+    private ListView listview;
+
     // UpdateProgressTime 를 관리하기위해서 사용하는 핸들러
     private Handler handler = new Handler();
 
-    private SongStore songStore;
+    private MusicFinder musicFinder;
 
     private UpdateProgressTime updateProgressTime = new UpdateProgressTime();
 
@@ -89,7 +95,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         seekbarSong = (SeekBar) this.findViewById(R.id.seekbarSong);
         btnNextSong = (Button) this.findViewById(R.id.btnNext);
         btnPreviousSong = (Button) this.findViewById(R.id.btnPrev);
-        songStore = new SongStore(this);
+        musicFinder = new MusicFinder(this);
 
         btnPause.setOnClickListener(this);
         checkboxRepeat.setOnClickListener(this);
@@ -100,6 +106,17 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         btnPreviousSong.setOnClickListener(this);
 
         layoutSlide = (SlidingUpPanelLayout)findViewById(R.id.layoutSlide);
+        musicFinder.findMusic(true, 0, null);
+        ArrayAdapter<String> listadapter;
+        listview = (ListView)findViewById(R.id.listViewPlaying);
+        listadapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                musicFinder.getMusicNames());
+        listview.setAdapter(listadapter);
+        listview.setOnItemClickListener(new ListViewItemClickListener());
+
+
         btnPause.setOnTouchListener(gestureListener); //임의로 버튼에 걸어놨음.
         setSongInfo();
         if (PlayService.mp.isPlaying()) {
@@ -109,7 +126,22 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             btnPause.setText("Play");
         }
     }
-
+    private class ListViewItemClickListener implements AdapterView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            // TODO Auto-generated method stub
+            Music m = musicFinder.findMusicByIndex(arg2);
+            String path = m.getPath();
+            PlayService.Title = path;
+            PlayService.SongId = m.getId();
+            intent.putExtra("func", PlayService.START);
+            intent.putExtra("path", path);
+            startService(intent);
+            setSongInfo();
+            layoutSlide.hidePanel();
+        }
+    }
 
     View.OnTouchListener gestureListener = new SwipeGestureListener() {
         public boolean onSwipeRight() {
@@ -154,9 +186,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                 break;
             case R.id.checkboxRandom:
             {
-                songStore.setRandom(checkboxRandom.isChecked());
+                musicFinder.setRandom(checkboxRandom.isChecked());
                 if(PlayService.SongId != null) {
-                    songStore.setRandomFirstSong(PlayService.SongId);
+                    musicFinder.setRandomFirstMusic(PlayService.SongId);
                 }
             }
             break;
@@ -170,9 +202,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             case R.id.btnPrev:
             {
                 if(PlayService.SongId != null) {
-                    SongStore.Song song = songStore.findPrevSongById(PlayService.SongId);
-                    intent.putExtra("id", song.getId());
-                    intent.putExtra("path", song.getPath());
+                    Music music = musicFinder.findPrevMusicById(PlayService.SongId);
+                    intent.putExtra("id", music.getId());
+                    intent.putExtra("path", music.getPath());
                     intent.putExtra("func", PlayService.CHANGE);
                     startService(intent);
                 }
@@ -202,7 +234,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             case PlayService.StatusChanged.PLAY: {
                 // 노래가 재생중이면 버튼은 "일시정지"가 되야함
                 btnPause.setText("Pause");
-                final SongStore.Song song = songStore.findSongById(PlayService.SongId);
+                final Music music = musicFinder.findMusicById(PlayService.SongId);
                 updateProgressBar();
             }
             break;
@@ -222,10 +254,10 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
      * onClick과 statusChanged에서 쓰이는 부분의 중복 제거를 위해 만듦
      */
     public void changeNextSong() {
-        SongStore.Song song = songStore.findNextSongById(PlayService.SongId);
-        if (!songStore.isLastSongById(PlayService.SongId) || checkboxRepeatAll.isChecked()) {
-            intent.putExtra("id", song.getId());
-            intent.putExtra("path", song.getPath());
+        Music music = musicFinder.findNextMusicById(PlayService.SongId);
+        if (!musicFinder.isLastMusicById(PlayService.SongId) || checkboxRepeatAll.isChecked()) {
+            intent.putExtra("id", music.getId());
+            intent.putExtra("path", music.getPath());
             intent.putExtra("func", PlayService.CHANGE);
             startService(intent);
         }
@@ -236,9 +268,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
      */
     public void setSongInfo() {
         if(PlayService.SongId != null) {
-            SongStore.Song song = songStore.findSongById(PlayService.SongId);
-            imgAlbumArt.setImageBitmap(song.getArtwork());
-            txtTitle.setText(song.getTitle());
+            Music music = musicFinder.findMusicById(PlayService.SongId);
+            imgAlbumArt.setImageBitmap(music.getArtwork());
+            txtTitle.setText(music.getTitle());
         }
     }
 

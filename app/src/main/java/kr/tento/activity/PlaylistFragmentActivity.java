@@ -24,6 +24,7 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
 
     Intent intent = new Intent("tento.PlaySongService");
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
