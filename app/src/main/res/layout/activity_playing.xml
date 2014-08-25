@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     sothree:panelHeight="0dp"
-    sothree:shadowHeight="0dp">
+    sothree:shadowHeight="0dp"
+    android:background="#ffffffff">
 
 
 <LinearLayout

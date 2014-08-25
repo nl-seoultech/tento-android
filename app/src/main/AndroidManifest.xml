@@ -16,7 +16,7 @@
         <activity
             android:name=".activity.PlayingActivity"
             android:label="@string/title_activity_playing" >
-         </activity>
+        </activity>
 
         <service android:name=".PlayService" >
             <intent-filter>
@@ -26,7 +26,7 @@
 
         <activity
             android:name=".activity.TentoFragmentActivity"
-            android:label="@string/title_activity_tento_fragment" >
+            android:label="@string/title_activity_tento_fragment">
         </activity>
 
         <activity android:name=".activity.PlaylistFragmentActivity"

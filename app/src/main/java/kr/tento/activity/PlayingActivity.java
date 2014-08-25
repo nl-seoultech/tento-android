@@ -15,6 +15,8 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -91,8 +93,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_playing);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         txtTitle =  (TextView) this.findViewById(R.id.txtTitle);
         btnPause = (Button) this.findViewById(R.id.btnPlayPause); //정지 버튼
         checkboxRepeat = (CheckBox) this.findViewById(R.id.checkboxRepeat);

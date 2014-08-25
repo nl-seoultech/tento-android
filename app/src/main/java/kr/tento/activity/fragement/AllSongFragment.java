@@ -20,6 +20,8 @@ public class AllSongFragment extends Fragment {
 
     private MusicFinder musicFinder;
 
+    static public boolean refresh = false;
+
     //TODO : fragment 중복 refactoring
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -30,7 +32,8 @@ public class AllSongFragment extends Fragment {
         Activity activity = getActivity();
         ArrayAdapter<String> listadapter; //Listview인 list와 list배열을 연결할 어댑터
         musicFinder = new MusicFinder(activity);
-        musicFinder.findMusic(true, musicFinder.ALLSONG, null);
+        musicFinder.findMusic(refresh, musicFinder.ALLSONG, null);
+        refresh = false;
         ListView listview = (ListView)rootView.findViewById(R.id.listAllSong);
         listadapter = new ArrayAdapter<String>(
                 activity,

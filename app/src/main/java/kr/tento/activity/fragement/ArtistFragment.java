@@ -76,7 +76,8 @@ public class ArtistFragment extends Fragment {
             // TODO Auto-generated method stub
             if(arg0.equals(listview)) {
                 Artist at = musicFinder.findArtistByIndex(arg2);
-                musicFinder.findMusic(true, musicFinder.ARTIST, at.getArtist());
+                AllSongFragment.refresh = true;
+                musicFinder.findMusic(AllSongFragment.refresh, musicFinder.ARTIST, at.getArtist());
                 listadapter = new ArrayAdapter<String>(
                         activity,
                         android.R.layout.simple_list_item_1,

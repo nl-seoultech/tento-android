@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.WindowManager;
+
 import java.util.ArrayList;
 
 import kr.tento.PlayService;
@@ -30,6 +32,7 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragmentactivity_playlist);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
