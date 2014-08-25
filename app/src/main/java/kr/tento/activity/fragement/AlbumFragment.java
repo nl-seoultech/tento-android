@@ -74,7 +74,7 @@ public class AlbumFragment extends Fragment {
             // TODO Auto-generated method stub
             if(arg0.equals(listview)) {
                 Album al = musicFinder.findAlbumByIndex(arg2);
-                musicFinder.findMusic(true, 2, al.getAlbum());
+                musicFinder.findMusic(true, musicFinder.ALBUM, al.getAlbum());
                 listadapter = new ArrayAdapter<String>(
                         activity,
                         android.R.layout.simple_list_item_1,

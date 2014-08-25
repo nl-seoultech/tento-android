@@ -35,6 +35,13 @@ public class MusicFinder {
 
     private static boolean random = false;
 
+    final public int ALLSONG = 0;
+
+    final public int ARTIST = 1;
+
+    final public int ALBUM = 2;
+
+
     // 랜덤 재생 인덱스의 순서를 저장하는 리스트, 실제 songs 리스트는 그대로두고 이 리스트만 섞어서 랜덤 재생곡을 결정합니다.
     private ArrayList<Integer> randomIndecies;
 
@@ -57,13 +64,13 @@ public class MusicFinder {
             String selection = null;
 
             switch (func){
-                case 0: //전체 곡
+                case ALLSONG: //전체 곡
                     selection = MediaStore.Audio.Media.IS_MUSIC + " = 1";
                     break;
-                case 1: //아티스트
+                case ARTIST: //아티스트
                     selection = MediaStore.Audio.Media.ARTIST + " = '"+select+"'";
                     break;
-                case 2: //앨범
+                case ALBUM: //앨범
                     selection = MediaStore.Audio.Media.ALBUM + " = '" + select+"'";
                     break;
             }
