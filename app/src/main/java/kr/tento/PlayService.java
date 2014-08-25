@@ -43,6 +43,7 @@ public class PlayService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         switch (intent.getIntExtra("func", 0)){
             case START:
                 startSong(intent.getStringExtra("path"));
@@ -164,4 +165,5 @@ public class PlayService extends Service{
     public void registerInterface(StatusChanged _sc){
         this.sc = _sc;
     }
+
 }

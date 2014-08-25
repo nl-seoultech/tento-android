@@ -12,6 +12,7 @@ import android.os.IBinder;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,6 +81,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     private UpdateProgressTime updateProgressTime = new UpdateProgressTime();
 
     Intent intent = new Intent("tento.PlaySongService");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,6 +298,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     }
 
+
     /**
      * 유저가 SeekBar 를 누르기시작하면 위치를 바꾸고싶어하는 것이므로 일단 SeekBar 의 진행을 멈춥니다.
      *
@@ -352,4 +356,10 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             }
         };
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
+    }
 }
