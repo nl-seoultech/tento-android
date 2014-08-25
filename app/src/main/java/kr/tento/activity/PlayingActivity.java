@@ -13,6 +13,7 @@ import android.os.IBinder;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,6 +72,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private Button btnPreviousSong;
 
+    private Button btnBackPlying;
+
     private ListView listview;
 
     // UpdateProgressTime 를 관리하기위해서 사용하는 핸들러
@@ -79,6 +82,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     private MusicFinder musicFinder;
 
     private UpdateProgressTime updateProgressTime = new UpdateProgressTime();
+
 
     Intent intent = new Intent("tento.PlaySongService");
 
@@ -108,7 +112,12 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         btnNextSong.setOnClickListener(this);
         btnPreviousSong.setOnClickListener(this);
 
+        btnBackPlying = (Button)findViewById(R.id.btnBackPlaying);
+        btnBackPlying.setOnClickListener(this);
+
+
         layoutSlide = (SlidingUpPanelLayout)findViewById(R.id.layoutSlide);
+        layoutSlide.setEnabled(false);
         musicFinder.findMusic(true, 0, null);
         ArrayAdapter<String> listadapter;
         listview = (ListView)findViewById(R.id.listViewPlaying);
@@ -118,7 +127,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                 musicFinder.getMusicNames());
         listview.setAdapter(listadapter);
         listview.setOnItemClickListener(new ListViewItemClickListener());
-
 
         btnPause.setOnTouchListener(gestureListener); //임의로 버튼에 걸어놨음.
         setSongInfo();
@@ -146,6 +154,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         }
     }
 
+
     View.OnTouchListener gestureListener = new SwipeGestureListener() {
         public boolean onSwipeRight() {
             return false;
@@ -157,6 +166,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
         public boolean onSwipeTop() {
             layoutSlide.expandPanel(); //열려라 참깨
+
             return false;
         }
 
@@ -213,6 +223,11 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                 }
             }
             break;
+            case R.id.btnBackPlaying:
+            {
+                layoutSlide.hidePanel();
+            }
+                break;
         }
     }
 
@@ -362,4 +377,5 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         super.onDestroy();
         unbindService(connection);
     }
+
 }

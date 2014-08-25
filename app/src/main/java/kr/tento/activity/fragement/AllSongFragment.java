@@ -30,7 +30,7 @@ public class AllSongFragment extends Fragment {
         Activity activity = getActivity();
         ArrayAdapter<String> listadapter; //Listview인 list와 list배열을 연결할 어댑터
         musicFinder = new MusicFinder(activity);
-        musicFinder.findMusic(false, musicFinder.ALLSONG, null);
+        musicFinder.findMusic(true, musicFinder.ALLSONG, null);
         ListView listview = (ListView)rootView.findViewById(R.id.listAllSong);
         listadapter = new ArrayAdapter<String>(
                 activity,

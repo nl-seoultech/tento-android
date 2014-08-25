@@ -35,7 +35,8 @@ public class ArtistFragment extends Fragment {
 
     ListView listviewDetail;
 
-    Button btnBack;
+    Button btnBackArtist;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,8 +49,9 @@ public class ArtistFragment extends Fragment {
         listview = (ListView)rootView.findViewById(R.id.listArtist);
         listviewDetail = (ListView)rootView.findViewById(R.id.listArtistDetail);
         slidingUpPanelLayout = (SlidingUpPanelLayout)rootView.findViewById(R.id.layoutSlideArtist);
-        btnBack = (Button)rootView.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        slidingUpPanelLayout.setEnabled(false);
+        btnBackArtist = (Button)rootView.findViewById(R.id.btnBackArtist);
+        btnBackArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 slidingUpPanelLayout.hidePanel();

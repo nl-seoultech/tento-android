@@ -35,7 +35,8 @@ public class AlbumFragment extends Fragment {
 
     ListView listviewDetail;
 
-    Button btnBack;
+    Button btnBackAlbum;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,13 +49,15 @@ public class AlbumFragment extends Fragment {
         listview = (ListView)rootView.findViewById(R.id.listAlbum);
         listviewDetail = (ListView)rootView.findViewById(R.id.listAlbumDetail);
         slidingUpPanelLayout = (SlidingUpPanelLayout)rootView.findViewById(R.id.layoutSlideAlbum);
-        btnBack = (Button)rootView.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        slidingUpPanelLayout.setEnabled(false);
+        btnBackAlbum = (Button)rootView.findViewById(R.id.btnBackAlbum);
+        btnBackAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 slidingUpPanelLayout.hidePanel();
             }
         });
+
 
         listadapter = new ArrayAdapter<String>(
                 activity,
