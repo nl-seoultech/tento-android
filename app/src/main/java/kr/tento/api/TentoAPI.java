@@ -3,7 +3,10 @@ package kr.tento.api;
 import android.os.AsyncTask;
 import android.util.Pair;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -103,6 +106,20 @@ public class TentoAPI<T> {
         formWithQuery(path, null, formData, callback);
     }
 
+    protected void postJson(
+            String path, HashMap<String, String> payload, TentoResponse.Callback callback) {
+        String json = null;
+        try {
+            json = new ObjectMapper().writeValueAsString(payload);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            json = "{}";
+        }
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, json);
+        makePost(buildURI(path).toString(), body, callback);
+    }
+
     protected void formWithQuery(
             String path, HashMap<String, String> query,
             HashMap<String, String> formData, TentoResponse.Callback callback) {
@@ -117,10 +134,10 @@ public class TentoAPI<T> {
         if(query != null) {
         }
 
-        makeFormPost(buildURI(path).toString(), formBody.build(), callback);
+        makePost(buildURI(path).toString(), formBody.build(), callback);
     }
 
-    private void makeFormPost(String url, RequestBody body, final TentoResponse.Callback callback) {
+    private void makePost(String url, RequestBody body, final TentoResponse.Callback callback) {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
