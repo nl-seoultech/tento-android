@@ -16,6 +16,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import kr.tento.MusicFinder;
 import kr.tento.PlayService;
 import kr.tento.R;
+import kr.tento.SwipeGestureListener;
 import kr.tento.model.Artist;
 import kr.tento.model.Music;
 
@@ -49,14 +50,8 @@ public class ArtistFragment extends Fragment {
         listview = (ListView)rootView.findViewById(R.id.listArtist);
         listviewDetail = (ListView)rootView.findViewById(R.id.listArtistDetail);
         slidingUpPanelLayout = (SlidingUpPanelLayout)rootView.findViewById(R.id.layoutSlideArtist);
-        slidingUpPanelLayout.setEnabled(false);
         btnBackArtist = (Button)rootView.findViewById(R.id.btnBackArtist);
-        btnBackArtist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                slidingUpPanelLayout.hidePanel();
-            }
-        });
+        slidingUpPanelLayout.setDragView(btnBackArtist);
 
         listadapter = new ArrayAdapter<String>(
                 activity,

@@ -74,7 +74,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private Button btnPreviousSong;
 
-    private Button btnBackPlying;
+    private Button btnBackPlaying;
 
     private ListView listview;
 
@@ -115,12 +115,11 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         btnNextSong.setOnClickListener(this);
         btnPreviousSong.setOnClickListener(this);
 
-        btnBackPlying = (Button)findViewById(R.id.btnBackPlaying);
-        btnBackPlying.setOnClickListener(this);
+        btnBackPlaying = (Button)findViewById(R.id.btnBackPlaying);
 
 
         layoutSlide = (SlidingUpPanelLayout)findViewById(R.id.layoutSlide);
-        layoutSlide.setEnabled(false);
+        layoutSlide.setDragView(btnBackPlaying);
         musicFinder.findMusic(true, 0, null);
         ArrayAdapter<String> listadapter;
         listview = (ListView)findViewById(R.id.listViewPlaying);
@@ -174,6 +173,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         }
 
         public boolean onSwipeBottom() {
+            layoutSlide.hidePanel();
             return false;
         }
     };
@@ -226,11 +226,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                 }
             }
             break;
-            case R.id.btnBackPlaying:
-            {
-                layoutSlide.hidePanel();
-            }
-                break;
         }
     }
 

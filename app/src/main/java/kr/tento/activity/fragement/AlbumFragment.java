@@ -16,6 +16,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import kr.tento.MusicFinder;
 import kr.tento.PlayService;
 import kr.tento.R;
+import kr.tento.SwipeGestureListener;
 import kr.tento.model.Album;
 import kr.tento.model.Music;
 
@@ -37,6 +38,7 @@ public class AlbumFragment extends Fragment {
 
     Button btnBackAlbum;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,18 +48,11 @@ public class AlbumFragment extends Fragment {
         activity = getActivity();
         musicFinder = new MusicFinder(activity);
         musicFinder.findAlbum(false);
-        listview = (ListView)rootView.findViewById(R.id.listAlbum);
-        listviewDetail = (ListView)rootView.findViewById(R.id.listAlbumDetail);
-        slidingUpPanelLayout = (SlidingUpPanelLayout)rootView.findViewById(R.id.layoutSlideAlbum);
-        slidingUpPanelLayout.setEnabled(false);
+        listview = (ListView) rootView.findViewById(R.id.listAlbum);
+        listviewDetail = (ListView) rootView.findViewById(R.id.listAlbumDetail);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) rootView.findViewById(R.id.layoutSlideAlbum);
         btnBackAlbum = (Button)rootView.findViewById(R.id.btnBackAlbum);
-        btnBackAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                slidingUpPanelLayout.hidePanel();
-            }
-        });
-
+        slidingUpPanelLayout.setDragView(btnBackAlbum);
 
         listadapter = new ArrayAdapter<String>(
                 activity,
@@ -68,7 +63,6 @@ public class AlbumFragment extends Fragment {
 
         return rootView;
     }
-
 
     private class ListViewItemClickListener implements AdapterView.OnItemClickListener
     {
