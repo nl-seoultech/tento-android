@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import java.util.ArrayList;
 
+import kr.tento.BackPressHandler;
 import kr.tento.PlayService;
 import kr.tento.R;
 import kr.tento.activity.fragement.AlbumFragment;
@@ -24,6 +25,8 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
 
     AllSongFragment allsongf;
 
+    private BackPressHandler backPressHandler;
+
     Intent intent = new Intent("tento.PlaySongService");
 
 
@@ -32,13 +35,14 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragmentactivity_playlist);
 
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         actionBar.setViewPager(mViewPager);
         allsongf = (AllSongFragment) mSectionsPagerAdapter.fragments.get(0);
-
+        backPressHandler = new BackPressHandler(this);
 
     }
 
@@ -56,6 +60,11 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
 
         Intent intent1 = new Intent(this, PlayingActivity.class);
         startActivity(intent1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressHandler.onBackPressed();
     }
 }
 
@@ -105,5 +114,6 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragments.size();
     }
+
 }
 
