@@ -5,6 +5,8 @@ android {
     buildToolsVersion '20.0.0'
 
     packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'LICENSE.txt'
     }
