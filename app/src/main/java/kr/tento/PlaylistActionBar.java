@@ -2,7 +2,9 @@ package kr.tento;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.ViewPager;
+
 public class PlaylistActionBar {
 
     /** tento 프로토타입에 쓰이는 `ActionBar`를 정의하는 클래스
@@ -27,6 +29,7 @@ public class PlaylistActionBar {
         // Mood Tab
         private ActionBar.Tab Mood;
 
+
         /**
          *
          * @param act ActionBar를 활성화 시킬 Activity activity.getActionBar()로 actionBar 를
@@ -35,9 +38,14 @@ public class PlaylistActionBar {
         public PlaylistActionBar(Activity act) {
             activity = act;
             actionBar = activity.getActionBar();
+            actionBar.setTitle("Tento");
+            actionBar.setIcon(null);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setHomeButtonEnabled(false);
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
             initTabs();
+
         }
 
 

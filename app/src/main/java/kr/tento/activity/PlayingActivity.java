@@ -12,11 +12,8 @@ import android.os.IBinder;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -78,6 +75,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private ListView listview;
 
+    private Button btnGotoList;
+
     // UpdateProgressTime 를 관리하기위해서 사용하는 핸들러
     private Handler handler = new Handler();
 
@@ -93,9 +92,12 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_playing);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         txtTitle =  (TextView) this.findViewById(R.id.txtTitle);
         btnPause = (Button) this.findViewById(R.id.btnPlayPause); //정지 버튼
         checkboxRepeat = (CheckBox) this.findViewById(R.id.checkboxRepeat);
@@ -107,6 +109,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         btnPreviousSong = (Button) this.findViewById(R.id.btnPrev);
         musicFinder = new MusicFinder(this);
 
+        btnGotoList = (Button)this.findViewById(R.id.btnGotoList);
         btnPause.setOnClickListener(this);
         checkboxRepeat.setOnClickListener(this);
         checkboxRepeatAll.setOnClickListener(this);
@@ -114,6 +117,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         seekbarSong.setOnSeekBarChangeListener(this);
         btnNextSong.setOnClickListener(this);
         btnPreviousSong.setOnClickListener(this);
+        btnGotoList.setOnClickListener(this);
 
         btnBackPlaying = (Button)findViewById(R.id.btnBackPlaying);
 
@@ -224,8 +228,15 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                     intent.putExtra("func", PlayService.CHANGE);
                     startService(intent);
                 }
+
             }
             break;
+            case R.id.btnGotoList:
+            {
+                onBackPressed();
+            }
+            break;
+
         }
     }
 
@@ -373,7 +384,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(connection);
+        if(PlayService.SongId!=null){
+            unbindService(connection);
+        }
     }
-
 }

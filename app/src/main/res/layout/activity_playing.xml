@@ -4,12 +4,13 @@
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutSlide"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:gravity="bottom"
     sothree:panelHeight="0dp"
     sothree:shadowHeight="0dp"
-    android:background="#ffffffff">
+    android:background="#FFFFFF"
+    android:clickable="false">
 
 
 <LinearLayout
@@ -24,7 +25,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="9">
+            android:layout_weight="4">
 
             <ImageView
                 android:id="@+id/imgAlbumArt"
@@ -32,14 +33,15 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_launcher" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="fill_parent"
+            android:layout_weight="6">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -85,7 +87,7 @@
                     android:id="@+id/seekbarSong"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"/>
             </LinearLayout>
 
             <LinearLayout

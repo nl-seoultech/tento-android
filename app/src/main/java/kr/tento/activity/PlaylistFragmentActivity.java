@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -33,14 +32,13 @@ public class PlaylistFragmentActivity extends TentoFragmentActivity implements A
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.fragmentactivity_playlist);
-
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         actionBar.setViewPager(mViewPager);
+
         allsongf = (AllSongFragment) mSectionsPagerAdapter.fragments.get(0);
         backPressHandler = new BackPressHandler(this);
 
