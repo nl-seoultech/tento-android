@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +42,7 @@ public class PlayService extends Service{
             }
         });
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -103,7 +105,7 @@ public class PlayService extends Service{
 
         @Override
         public void run() {
-            stopSelf();
+            stopForeground(true);
         }
     }
 
@@ -170,5 +172,6 @@ public class PlayService extends Service{
     public void registerInterface(StatusChanged _sc){
         this.sc = _sc;
     }
+
 
 }
