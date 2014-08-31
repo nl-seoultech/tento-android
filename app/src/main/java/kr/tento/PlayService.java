@@ -1,5 +1,6 @@
 package kr.tento;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -43,6 +44,10 @@ public class PlayService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        Notification notification = new Notification(R.drawable.ic_launcher, "서비스 실행됨", System.currentTimeMillis());
+        notification.setLatestEventInfo(getApplicationContext(), "Tento Service", "Foreground로 실행됨", null);
+        startForeground(1, notification);
 
         switch (intent.getIntExtra("func", 0)){
             case START:
