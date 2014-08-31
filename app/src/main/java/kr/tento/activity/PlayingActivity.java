@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,10 +50,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private SlidingUpPanelLayout layoutSlide;
 
-    private LinearLayout layoutMain;
-
-    private Button btnPause;
-
     private TextView txtTitle;
 
     private CheckBox checkboxRepeat;
@@ -66,10 +61,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     private ImageView imgAlbumArt;
 
     private SeekBar seekbarSong;
-
-    private Button btnNextSong;
-
-    private Button btnPreviousSong;
 
     private Button btnBackPlaying;
 
@@ -99,25 +90,21 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
 
         txtTitle =  (TextView) this.findViewById(R.id.txtTitle);
-        btnPause = (Button) this.findViewById(R.id.btnPlayPause); //정지 버튼
         checkboxRepeat = (CheckBox) this.findViewById(R.id.checkboxRepeat);
         checkboxRandom = (CheckBox) this.findViewById(R.id.checkboxRandom);
         checkboxRepeatAll = (CheckBox) this.findViewById(R.id.checkboxRepeatAll);
         imgAlbumArt = (ImageView) this.findViewById(R.id.imgAlbumArt);
         seekbarSong = (SeekBar) this.findViewById(R.id.seekbarSong);
-        btnNextSong = (Button) this.findViewById(R.id.btnNext);
-        btnPreviousSong = (Button) this.findViewById(R.id.btnPrev);
         musicFinder = new MusicFinder(this);
 
         btnGotoList = (Button)this.findViewById(R.id.btnGotoList);
-        btnPause.setOnClickListener(this);
         checkboxRepeat.setOnClickListener(this);
         checkboxRepeatAll.setOnClickListener(this);
         checkboxRandom.setOnClickListener(this);
         seekbarSong.setOnSeekBarChangeListener(this);
-        btnNextSong.setOnClickListener(this);
-        btnPreviousSong.setOnClickListener(this);
         btnGotoList.setOnClickListener(this);
+        imgAlbumArt.setOnClickListener(this);
+        imgAlbumArt.setOnTouchListener(gestureListener);
 
         btnBackPlaying = (Button)findViewById(R.id.btnBackPlaying);
 
@@ -134,13 +121,9 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         listview.setAdapter(listadapter);
         listview.setOnItemClickListener(new ListViewItemClickListener());
 
-        btnPause.setOnTouchListener(gestureListener); //임의로 버튼에 걸어놨음.
         setSongInfo();
         if (PlayService.mp.isPlaying()) {
             connectService();
-            btnPause.setText("Pause");
-        } else {
-            btnPause.setText("Play");
         }
     }
     private class ListViewItemClickListener implements AdapterView.OnItemClickListener
@@ -163,22 +146,32 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     View.OnTouchListener gestureListener = new SwipeGestureListener() {
         public boolean onSwipeRight() {
-            return false;
+            if(PlayService.SongId != null) {
+                changeNextSong();
+            }
+            return true;
         }
 
         public boolean onSwipeLeft() {
-            return false;
+            if(PlayService.SongId != null) {
+                Music music = musicFinder.findPrevMusicById(PlayService.SongId);
+                intent.putExtra("id", music.getId());
+                intent.putExtra("path", music.getPath());
+                intent.putExtra("func", PlayService.CHANGE);
+                startService(intent);
+            }
+            return true;
         }
 
         public boolean onSwipeTop() {
             layoutSlide.expandPanel(); //열려라 참깨
 
-            return false;
+            return true;
         }
 
         public boolean onSwipeBottom() {
             layoutSlide.hidePanel();
-            return false;
+            return true;
         }
     };
 
@@ -193,12 +186,6 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             return;
         }
         switch (view.getId()) {
-            case R.id.btnPlayPause:
-                if(!PlayService.Title.isEmpty()){
-                    intent.putExtra("func", PlayService.PLAYPAUSE);
-                    startService(intent);
-                }
-                break;
             case R.id.checkboxRepeat:
                 intent.putExtra("func", PlayService.LOOPCONTROL);
                 intent.putExtra("state", checkboxRepeat.isChecked());
@@ -212,31 +199,18 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
                 }
             }
             break;
-            case R.id.btnNext:
-            {
-                if(PlayService.SongId != null) {
-                    changeNextSong();
-                }
-            }
-            break;
-            case R.id.btnPrev:
-            {
-                if(PlayService.SongId != null) {
-                    Music music = musicFinder.findPrevMusicById(PlayService.SongId);
-                    intent.putExtra("id", music.getId());
-                    intent.putExtra("path", music.getPath());
-                    intent.putExtra("func", PlayService.CHANGE);
-                    startService(intent);
-                }
-
-            }
-            break;
             case R.id.btnGotoList:
             {
                 onBackPressed();
             }
             break;
-
+            case R.id.imgAlbumArt:
+            {
+                if(!PlayService.Title.isEmpty()){
+                    intent.putExtra("func", PlayService.PLAYPAUSE);
+                    startService(intent);
+                }
+            }
         }
     }
 
@@ -254,13 +228,11 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
         switch (status) {
             case PlayService.StatusChanged.PAUSE: {
                 // 노래가 재생중이면 버튼은 "재생"이 되야함
-                btnPause.setText("Play");
                 stopProgressBar();
             }
             break;
             case PlayService.StatusChanged.PLAY: {
                 // 노래가 재생중이면 버튼은 "일시정지"가 되야함
-                btnPause.setText("Pause");
                 final Music music = musicFinder.findMusicById(PlayService.SongId);
                 updateProgressBar();
             }

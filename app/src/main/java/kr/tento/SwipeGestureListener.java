@@ -1,6 +1,5 @@
 package kr.tento;
 
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -13,6 +12,7 @@ public class SwipeGestureListener implements OnTouchListener {
 
     public boolean onTouch(final View v, final MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
+
     }
 
     private final class GestureListener extends SimpleOnGestureListener {
@@ -20,10 +20,13 @@ public class SwipeGestureListener implements OnTouchListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
+
         @Override
         public boolean onDown(MotionEvent e) {
             return super.onDown(e);
         }
+
+
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -56,18 +59,18 @@ public class SwipeGestureListener implements OnTouchListener {
     }
 
     public boolean onSwipeRight() {
-        return false;
+        return true;
     }
 
     public boolean onSwipeLeft() {
-        return false;
+        return true;
     }
 
     public boolean onSwipeTop() {
-        return false;
+        return true;
     }
 
     public boolean onSwipeBottom() {
-        return false;
+        return true;
     }
 }
