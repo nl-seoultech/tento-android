@@ -68,6 +68,8 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
 
     private Button btnGotoList;
 
+    private long totalDuration;
+
     // UpdateProgressTime 를 관리하기위해서 사용하는 핸들러
     private Handler handler = new Handler();
 
@@ -270,6 +272,11 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
             Music music = musicFinder.findMusicById(PlayService.SongId);
             imgAlbumArt.setImageBitmap(music.getArtwork());
             txtTitle.setText(music.getTitle());
+            totalDuration = PlayService.mp.getDuration();
+            int nowPosition = PlayService.mp.getCurrentPosition();
+            int pos = nowPosition/((int)totalDuration);
+            seekbarSong.setProgress(pos);
+            updateProgressBar();
         }
     }
 
@@ -313,7 +320,7 @@ public class PlayingActivity extends Activity implements View.OnClickListener, S
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         stopProgressBar();
-        long totalDuration = PlayService.mp.getDuration();
+        totalDuration = PlayService.mp.getDuration();
         int pos = (int) (totalDuration * (seekBar.getProgress() / 100.0));
         intent.putExtra("func", PlayService.SEEKTO);
         intent.putExtra("seekTo", pos);
